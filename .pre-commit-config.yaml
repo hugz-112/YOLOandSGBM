@@ -1,0 +1,60 @@
+# 提交前自动检查（只检查本次暂存的文件，不会全库重写）
+# 使用本机已安装的 pre-commit-hooks 与 ruff，不创建虚拟环境，启动更快
+# 手动跳过：git commit --no-verify
+repos:
+  - repo: local
+    hooks:
+      # ---- 文件卫生 ----
+      - id: trailing-whitespace
+        name: 行尾多余空格
+        entry: trailing-whitespace-fixer
+        language: system
+        types: [text]
+
+      - id: end-of-file-fixer
+        name: 文件末尾换行
+        entry: end-of-file-fixer
+        language: system
+        types: [text]
+
+      - id: check-yaml
+        name: YAML 语法检查
+        entry: check-yaml
+        language: system
+        types: [yaml]
+
+      - id: check-merge-conflict
+        name: 冲突标记检查
+        entry: check-merge-conflict
+        language: system
+        types: [text]
+
+      - id: check-added-large-files
+        name: 大文件拦截
+        entry: check-added-large-files --maxkb=2048
+        language: system
+
+      # ---- Python 代码 ----
+      - id: ruff
+        name: Ruff 代码检查
+        entry: ruff check --select E9,F63,F7,F82
+        language: system
+        types: [python]
+
+      - id: ruff-format
+        name: Ruff 自动格式化
+        entry: ruff format
+        language: system
+        types: [python]
+
+# 全局排除：第三方源码、生成目录、二进制/权重/数据集
+exclude: |
+  (?x)^(
+      ultralytics/|
+      ceju/8_ZED2_pytorch_yolov8/|
+      runs/|
+      MyDataset/|
+      ultralytics_rc_output/|
+      .*__pycache__/.*|
+      .*\.(pt|onnx|engine|mp4|avi|mov|npy|pyc|pyd|dll|exe|jpg|jpeg|png|gif|zip|7z)$
+  )
