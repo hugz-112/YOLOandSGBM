@@ -1,0 +1,52 @@
+# CodeRabbit 配置
+# 文档：https://docs.coderabbit.ai/reference/configuration
+# 该文件需位于默认分支 main 才会生效
+language: "zh-CN"
+early_access: false
+
+reviews:
+  # chill：只提重要问题；assertive：更严格
+  profile: "chill"
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+  sequence_diagrams: false
+  changed_files_summary: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+
+  # 排除第三方源码与二进制，减少无效审查
+  path_filters:
+    - "!ultralytics/**"
+    - "!ceju/8_ZED2_pytorch_yolov8/**"
+    - "!runs/**"
+    - "!MyDataset/**"
+    - "!ultralytics_rc_output/**"
+    - "!**/*.pt"
+    - "!**/*.onnx"
+    - "!**/*.engine"
+    - "!**/*.pyc"
+    - "!**/*.mp4"
+    - "!**/*.avi"
+    - "!**/*.jpg"
+    - "!**/*.png"
+    - "!**/*.npy"
+
+  path_instructions:
+    - path: "**/*.py"
+      instructions: |
+        用中文给出审查意见。本项目是 YOLOv8 + 双目视觉（SGBM）实验代码，请重点关注：
+        1. OpenCV / CUDA 资源是否正确释放（cv2.VideoCapture、VideoWriter、torch tensor）；
+        2. 数据集、权重、视频路径是否硬编码，是否容易因换机器而失败；
+        3. 除零、空数组、无匹配点等数值边界；
+        4. 设备字符串（'0' / 'cpu'）与 batch 维度处理是否一致。
+        纯风格问题不必提，已有 ruff-format 负责格式。
+
+chat:
+  auto_reply: true
