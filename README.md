@@ -2,6 +2,19 @@
 
 本项目基于 YOLOv8（内置 `ultralytics 8.2.18`）实现目标检测、训练、验证、跟踪与区域计数，并结合双目视觉完成相机标定、极线矫正、深度图计算与双目测距（BM / SGBM / 改进 SGBM），同时提供 ZED2 相机 + YOLOv8 的 3D 目标检测示例。
 
+## 项目简介
+
+本项目基于 YOLOv8 和 SGBM，实现了水下目标检测与双目测距。
+
+### 功能特点
+
+- 支持实时目标检测；
+- 支持双目测距；
+- 支持 PyQt5 图形界面；
+- 支持 TensorRT 加速部署。
+
+> 注意：请先下载模型权重，再运行程序。
+
 ## 目录结构
 
 ```
@@ -27,6 +40,7 @@ YOLOv8.2/
 
 ## 环境要求
 
+- 实测环境：Python 3.10、PyTorch 2.1、CUDA 12.1
 - Python 3.8+
 - PyTorch / torchvision（GPU 训练需 CUDA）
 - opencv-python、numpy、shapely、matplotlib、scikit-learn、Pillow
